@@ -3,6 +3,8 @@ export class SocialUser {
   id: string;
   email: string;
   name: string;
+  givenName: string;
+  familyName: string;
   image: string;
   token?: string;
   idToken?: string
