@@ -41,6 +41,8 @@ export class GoogleLoginProvider extends BaseLoginProvider {
     let authResponseObj = this.auth2.currentUser.get().getAuthResponse(true);
     user.id = profile.getId();
     user.name = profile.getName();
+    user.givenName = profile.getGivenName();
+    user.familyName = profile.getFamilyName();
     user.email = profile.getEmail();
     user.image = profile.getImageUrl();
     user.token = authResponseObj.access_token;
