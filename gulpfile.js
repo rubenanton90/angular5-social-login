@@ -220,6 +220,37 @@ gulp.task('build', ['clean', 'compile']);
 gulp.task('build:watch', ['build', 'watch']);
 gulp.task('default', ['build:watch']);
 
+gulp.task('copy:root', function () {
+  return gulp.src([`${distFolder}/**/*`])
+    .pipe(gulp.dest(rootFolder));
+});
+
+gulp.task('github', function () {
+  runSequence(
+    'clean:dist',
+    'copy:source',
+    'inline-resources',
+    'ngc',
+    'rollup:fesm',
+    'rollup:umd',
+    'copy:build',
+    'copy:manifest',
+    'copy:readme',
+    'clean:build',
+    'clean:tmp',
+	'copy:root',
+	'clean:dist',
+    function (err) {
+      if (err) {
+        console.log('ERROR:', err.message);
+        deleteFolders([distFolder, tmpFolder, buildFolder]);
+      } else {
+        console.log('Compilation finished succesfully');
+      }
+    });
+});
+
+
 /**
  * Deletes the specified folder
  */
